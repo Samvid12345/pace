@@ -2,11 +2,12 @@
 
 import { ArrowDown, ArrowUp, Check, Clock3, Edit3, Plus, Trash2, X } from "lucide-react"
 import { useState, type FormEvent } from "react"
-import { formatDueDate, isCompleteToday, isTaskComplete, shiftDateKey, type EffortLevel, type PaceTask } from "@/components/pace-data"
+import { formatDueDate, isCompleteToday, isTaskComplete, shiftDateKey, taskTypeLabels, type EffortLevel, type PaceTask, type TaskType } from "@/components/pace-data"
 
 interface PaceTaskManagerProps {
   tasks: PaceTask[]
   today: string
+  subjects: string[]
   feedback: string
   completionFeedback: string
   undoTaskName?: string
@@ -22,6 +23,7 @@ interface TaskDraft {
   subject: string
   dueDate: string
   effort: EffortLevel
+  taskType: TaskType
   estimatedMinutes: number
 }
 
@@ -31,6 +33,7 @@ function createBlankDraft(today: string): TaskDraft {
     subject: "",
     dueDate: shiftDateKey(today, 1),
     effort: "low",
+    taskType: "mental",
     estimatedMinutes: 15,
   }
 }
@@ -38,6 +41,7 @@ function createBlankDraft(today: string): TaskDraft {
 export function PaceTaskManager({
   tasks,
   today,
+  subjects,
   feedback,
   completionFeedback,
   undoTaskName,
@@ -65,6 +69,7 @@ export function PaceTaskManager({
       subject: task.subject,
       dueDate: task.dueDate,
       effort: task.effort,
+      taskType: task.taskType,
       estimatedMinutes: task.estimatedMinutes,
     })
     setFormOpen(true)
@@ -81,6 +86,7 @@ export function PaceTaskManager({
       subject,
       dueDate: draft.dueDate,
       effort: draft.effort,
+      taskType: draft.taskType,
       estimatedMinutes: Math.max(5, Math.min(360, Math.round(draft.estimatedMinutes))),
     }, editingId)
     setFormOpen(false)
@@ -144,7 +150,11 @@ export function PaceTaskManager({
                 value={draft.subject}
                 onChange={(event) => setDraft((current) => ({ ...current, subject: event.target.value }))}
                 placeholder="Biology"
+                list="pace-subject-suggestions"
               />
+              <datalist id="pace-subject-suggestions">
+                {subjects.map((subject) => <option value={subject} key={subject} />)}
+              </datalist>
             </label>
             <label className="pace-field">
               <span>Due date</span>
@@ -164,6 +174,15 @@ export function PaceTaskManager({
                 <option value="low">Low</option>
                 <option value="medium">Medium</option>
                 <option value="high">High</option>
+              </select>
+            </label>
+            <label className="pace-field">
+              <span>Task type</span>
+              <select
+                value={draft.taskType}
+                onChange={(event) => setDraft((current) => ({ ...current, taskType: event.target.value as TaskType }))}
+              >
+                {Object.entries(taskTypeLabels).map(([value, label]) => <option value={value} key={value}>{label}</option>)}
               </select>
             </label>
             <label className="pace-field">
@@ -209,6 +228,8 @@ export function PaceTaskManager({
                     <span>{formatDueDate(task.dueDate, today)}</span>
                     <span aria-hidden="true">·</span>
                     <span className={`effort-tag effort-${task.effort}`}>{task.effort}</span>
+                    <span aria-hidden="true">·</span>
+                    <span>{taskTypeLabels[task.taskType]}</span>
                     <span aria-hidden="true">·</span>
                     <span><Clock3 aria-hidden="true" />{task.estimatedMinutes} min</span>
                   </div>

@@ -46,9 +46,9 @@ const plans: Record<EnergyLevel, EnergyPlan> = {
   low: {
     intro: "One small, useful step — with plenty of room to stop.",
     now: {
-      id: "professor-email",
-      title: "Send a short note to your professor",
-      detail: "You can ask about a little more time on the biology reflection.",
+      id: "teacher-email",
+      title: "Send a short note to your teacher",
+      detail: "You can ask your teacher for a little more time on the biology reflection.",
       time: "5 min",
       canComplete: true,
     },
@@ -166,7 +166,6 @@ export function PacePlan({ energy, completed, onToggleComplete }: PacePlanProps)
           <p className="section-kicker">A PLAN THAT CAN BEND</p>
           <h2 id="plan-heading">Your school day</h2>
         </div>
-        <span className="demo-data-tag">Demo plan</span>
       </div>
       <p className="plan-intro">{plan.intro}</p>
 
@@ -218,7 +217,7 @@ export function PacePlan({ energy, completed, onToggleComplete }: PacePlanProps)
 }
 
 const demoTasks = [
-  { title: "Email professor about the biology reflection", meta: "Today · about 5 min", status: "Easy to break up" },
+  { title: "Email a teacher about the biology reflection", meta: "Today · about 5 min", status: "Easy to break up" },
   { title: "Biology lab reflection", meta: "Due tomorrow · about 25 min", status: "A few short sessions" },
   { title: "History essay opening", meta: "Due Friday · about 40 min", status: "Flexible" },
 ]

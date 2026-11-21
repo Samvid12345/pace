@@ -2,13 +2,15 @@
 
 import { Activity, Plus, Trash2 } from "lucide-react"
 import { useMemo, useState, type FormEvent } from "react"
-import { shiftDateKey, symptomOptions, type EnergyDay, type SymptomEntry } from "@/components/pace-data"
+import { effortPoints, shiftDateKey, symptomOptions, taskTypeLabels, type EnergyDay, type PaceTask, type SymptomEntry, type TaskReview, type TaskType } from "@/components/pace-data"
 import type { EnergyLevel } from "@/components/pace-energy-picker"
 
 interface PaceSymptomTrackerProps {
   symptoms: SymptomEntry[]
   customSymptoms: string[]
   energyHistory: EnergyDay[]
+  tasks: PaceTask[]
+  taskReviews: TaskReview[]
   today: string
   onLog: (symptom: string, severity: number, note: string) => void
   onAddCustom: (symptom: string) => void
@@ -110,10 +112,36 @@ function WeeklyPattern({ symptoms, energyHistory, today }: Pick<PaceSymptomTrack
   )
 }
 
+function TaskTypeInsight({ tasks, taskReviews }: Pick<PaceSymptomTrackerProps, "tasks" | "taskReviews">) {
+  const weights: Record<TaskType, number> = { mental: 0, social: 0, physical: 0 }
+  const reviewedTasks = taskReviews.length > 0
+
+  if (reviewedTasks) {
+    for (const review of taskReviews) {
+      weights[review.taskType] += review.feeling === "harder" ? 30 : review.feeling === "easier" ? 10 : 20
+    }
+  } else {
+    for (const task of tasks) weights[task.taskType] += effortPoints(task.effort)
+  }
+
+  const mostDraining = (Object.keys(weights) as TaskType[]).sort((first, second) => weights[second] - weights[first])[0]
+  const hasSignal = weights[mostDraining] > 0
+
+  return (
+    <aside className="task-type-insight" aria-label="Task type insight">
+      <p className="section-kicker">A SMALL PATTERN</p>
+      <strong>{hasSignal ? `${taskTypeLabels[mostDraining]} tasks ${reviewedTasks ? "seem to take the most out of you lately" : "carry the most estimated effort in this plan"}.` : "A task-type insight will appear as your plan takes shape."}</strong>
+      <span>{reviewedTasks ? "Based on how completed tasks felt, not a rule about what you can do." : "Pace will refine this estimate as you check in about completed tasks."}</span>
+    </aside>
+  )
+}
+
 export function PaceSymptomTracker({
   symptoms,
   customSymptoms,
   energyHistory,
+  tasks,
+  taskReviews,
   today,
   onLog,
   onAddCustom,
@@ -252,6 +280,7 @@ export function PaceSymptomTracker({
       </section>
 
       <WeeklyPattern symptoms={symptoms} energyHistory={energyHistory} today={today} />
+      <TaskTypeInsight tasks={tasks} taskReviews={taskReviews} />
     </div>
   )
 }

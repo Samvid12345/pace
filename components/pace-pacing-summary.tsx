@@ -1,5 +1,5 @@
 import { BatteryCharging, Heart } from "lucide-react"
-import { effortPoints, isCompleteToday, type PaceTask } from "@/components/pace-data"
+import { getDailyEnergyLimit, getDailyEnergyUsage, type PaceTask, type RestEntry, type TaskReview } from "@/components/pace-data"
 import type { EnergyLevel } from "@/components/pace-energy-picker"
 
 interface PacePacingSummaryProps {
@@ -7,22 +7,15 @@ interface PacePacingSummaryProps {
   energy: EnergyLevel
   guardActive: boolean
   today: string
+  safeDailyLimit: number
+  reviews: TaskReview[]
+  restActivities: RestEntry[]
 }
 
-function getSafeLimit(energy: EnergyLevel, guardActive: boolean) {
-  if (energy === "drained") return 0
-  if (guardActive) return 15
-  if (energy === "low") return 30
-  if (energy === "okay") return 50
-  return 70
-}
-
-export function PacePacingSummary({ tasks, energy, guardActive, today }: PacePacingSummaryProps) {
-  const used = tasks.reduce((sum, task) => {
-    return isCompleteToday(task, today) ? sum + effortPoints(task.effort) : sum
-  }, 0)
-  const safeLimit = getSafeLimit(energy, guardActive)
-  const barPercent = safeLimit === 0 ? (used > 0 ? 100 : 0) : Math.min(100, Math.round((used / safeLimit) * 100))
+export function PacePacingSummary({ tasks, energy, guardActive, today, safeDailyLimit, reviews, restActivities }: PacePacingSummaryProps) {
+  const { used, restored } = getDailyEnergyUsage(tasks, reviews, restActivities, today)
+  const safeLimit = getDailyEnergyLimit(energy, guardActive, safeDailyLimit)
+  const barPercent = safeLimit === 0 ? (restored > 0 ? 100 : 0) : Math.min(100, Math.round((used / safeLimit) * 100))
   const overLimit = used > safeLimit
 
   return (
@@ -37,24 +30,25 @@ export function PacePacingSummary({ tasks, energy, guardActive, today }: PacePac
       </div>
       <div className="pacing-meter-copy">
         <strong>{used} <span>used</span></strong>
-        <span>{safeLimit === 0 ? "Rest is the limit today" : `of about ${safeLimit} energy points`}</span>
+        <span>of about {safeLimit} energy points</span>
       </div>
       <div
         className="pacing-meter"
         role="progressbar"
-        aria-label="Estimated energy used today"
+        aria-label="Estimated net energy used today"
         aria-valuemin={0}
         aria-valuemax={Math.max(safeLimit, 1)}
         aria-valuenow={used > safeLimit ? Math.max(safeLimit, 1) : used}
-        aria-valuetext={`${used} estimated energy points used${safeLimit === 0 ? "; rest is the limit" : `, soft limit ${safeLimit}`}`}
+        aria-valuetext={`${used} estimated energy points used after ${restored} restored from rest, soft limit ${safeLimit}`}
       >
         <span className="pacing-meter-fill" style={{ width: `${barPercent}%` }} />
       </div>
+      {restored > 0 && <p className="restored-energy-note">Rest activities returned {restored} energy points to today&apos;s meter.</p>}
       <p className="pacing-summary-note">
         {overLimit
           ? "You’ve already done a lot. Stopping here is completely okay."
-          : safeLimit === 0
-            ? "You don’t need to spend energy on school today."
+          : energy === "drained"
+            ? "Rest is the plan. The meter is only a gentle guide."
             : guardActive
               ? "We’ve made today smaller. The numbers are only a gentle guide."
               : "A rough planning guide, not a measure of your body."}

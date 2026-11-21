@@ -7,6 +7,7 @@ import {
   effortPoints,
   formatDueDate,
   isTaskComplete,
+  taskTypeLabels,
   type AssignmentBucket,
   type PaceTask,
 } from "@/components/pace-data"
@@ -17,7 +18,9 @@ interface PaceAssignmentsProps {
   energy: EnergyLevel
   guardActive: boolean
   today: string
+  remainingEnergy: number
   onToggleComplete: (taskId: string) => void
+  onSplitTask: (taskId: string) => void
 }
 
 const bucketDetails: Array<{
@@ -32,14 +35,18 @@ const bucketDetails: Array<{
 ]
 
 function getExtensionHref(task: PaceTask) {
-  const subject = encodeURIComponent(`A little more time for ${task.name}`)
+  const workName = task.name
+    .replace(/^(?:email|ask|send)\s.+?\s(?:about|for)\s+/i, "")
+    .replace(/^the\s+/i, "")
+    .trim()
+  const subject = encodeURIComponent(`A little more time for ${workName}`)
   const body = encodeURIComponent(
-    `Hello,\n\nI’m working on ${task.name} for ${task.subject}, but I need a little more time. Would an extension be possible?\n\nThank you,`,
+    `Hello,\n\nI'm working on the ${workName} for ${task.subject} class and would like a little more time. Would that be possible?\n\nThank you,`,
   )
   return `mailto:?subject=${subject}&body=${body}`
 }
 
-function DeadlineWarning({ task, today }: { task: PaceTask; today: string }) {
+export function DeadlineWarning({ task, today }: { task: PaceTask; today: string }) {
   return (
     <aside className="deadline-warning" aria-label="A deadline is coming up">
       <span className="deadline-icon"><CalendarClock aria-hidden="true" /></span>
@@ -59,15 +66,20 @@ function AssignmentRow({
   task,
   today,
   bucket,
+  remainingEnergy,
   onToggleComplete,
+  onSplitTask,
 }: {
   task: PaceTask
   today: string
   bucket: AssignmentBucket
+  remainingEnergy: number
   onToggleComplete: (taskId: string) => void
+  onSplitTask: (taskId: string) => void
 }) {
   const completed = isTaskComplete(task)
   const plannedForTomorrow = task.plannedDate > today
+  const mayNotFit = !completed && effortPoints(task.effort) > remainingEnergy
 
   return (
     <li className={`assignment-row${completed ? " is-complete" : ""}`}>
@@ -94,14 +106,22 @@ function AssignmentRow({
           <span>{task.estimatedMinutes} min</span>
           <span aria-hidden="true">·</span>
           <span>{task.effort} effort</span>
+          <span aria-hidden="true">·</span>
+          <span>{taskTypeLabels[task.taskType]}</span>
           <span className="sr-only">, about {effortPoints(task.effort)} estimated energy points</span>
         </div>
+        {mayNotFit && (
+          <div className="energy-fit-note">
+            <span>This may not fit the energy you have left today.</span>
+            <button type="button" onClick={() => onSplitTask(task.id)}>Do part one today, rest tomorrow</button>
+          </div>
+        )}
       </div>
     </li>
   )
 }
 
-export function PaceAssignments({ tasks, energy, guardActive, today, onToggleComplete }: PaceAssignmentsProps) {
+export function PaceAssignments({ tasks, energy, guardActive, today, remainingEnergy, onToggleComplete, onSplitTask }: PaceAssignmentsProps) {
   const assignments = tasks
     .map((task) => ({ task, bucket: bucketTask(task, energy, guardActive, today) }))
     .filter((item): item is { task: PaceTask; bucket: AssignmentBucket } => item.bucket !== null)
@@ -147,7 +167,9 @@ export function PaceAssignments({ tasks, energy, guardActive, today, onToggleCom
                       task={task}
                       today={today}
                       bucket={id}
+                      remainingEnergy={remainingEnergy}
                       onToggleComplete={onToggleComplete}
+                      onSplitTask={onSplitTask}
                     />
                   ))}
                 </ul>
