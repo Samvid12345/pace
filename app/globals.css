@@ -879,3 +879,1216 @@ button {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Pace checklist, assignments, pacing, and symptom journal */
+.pace-stage :is(button, a, input, select, textarea, summary):focus-visible {
+  outline: 3px solid #c57857;
+  outline-offset: 3px;
+}
+
+.pace-stage button:disabled {
+  cursor: not-allowed;
+  opacity: 0.42;
+}
+
+.today-view,
+.tasks-view,
+.patterns-view {
+  padding-bottom: 2px;
+}
+
+.view-intro {
+  padding: 12px 20px 18px;
+}
+
+.view-intro h1 {
+  max-width: 330px;
+  margin: 7px 0 7px;
+  color: #392f2a;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(26px, 7vw, 30px);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 1.08;
+}
+
+.view-intro > p:last-child {
+  max-width: 330px;
+  margin: 0;
+  color: #786e67;
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.section-heading-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.section-heading-row h2 {
+  margin: 4px 0 0;
+  color: #3b302b;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 1.16;
+}
+
+.section-intro {
+  margin: 7px 0 13px;
+  color: #7a7069;
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.crash-guard {
+  display: flex;
+  gap: 10px;
+  margin: 0 15px 12px;
+  border: 1px solid #e7d8cd;
+  border-radius: 17px;
+  padding: 12px;
+  background: #f6eee8;
+  color: #66564e;
+}
+
+.crash-guard-icon,
+.pacing-icon,
+.symptom-mark,
+.week-mark {
+  display: grid;
+  width: 29px;
+  height: 29px;
+  flex: 0 0 29px;
+  place-items: center;
+  border-radius: 10px;
+  background: #eadfd5;
+  color: #98664f;
+}
+
+.crash-guard-icon svg,
+.pacing-icon svg,
+.symptom-mark svg,
+.week-mark svg {
+  width: 15px;
+  height: 15px;
+  stroke-width: 1.8;
+}
+
+.crash-guard strong {
+  display: block;
+  color: #59483f;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.crash-guard p {
+  margin: 3px 0 4px;
+  color: #786b62;
+  font-size: 10px;
+  line-height: 1.45;
+}
+
+.crash-guard div > span {
+  color: #927d70;
+  font-size: 9px;
+  line-height: 1.45;
+}
+
+.compact-guard {
+  margin-top: 0;
+}
+
+.pacing-summary {
+  margin: 0 15px 19px;
+  border: 1px solid #e8e7dc;
+  border-radius: 19px;
+  padding: 13px;
+  background: #f3f3eb;
+}
+
+.pacing-summary.is-guarded {
+  border-color: #e7d8cd;
+  background: #f7f0ea;
+}
+
+.pacing-summary-top {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.pacing-icon {
+  background: #e7e9dc;
+  color: #76806a;
+}
+
+.pacing-summary-copy {
+  min-width: 0;
+  flex: 1;
+}
+
+.pacing-summary-copy .section-kicker {
+  font-size: 8px;
+}
+
+.pacing-summary-copy h2 {
+  margin: 3px 0 0;
+  color: #3b302b;
+  font-size: 13px;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+}
+
+.pacing-heart {
+  display: grid;
+  width: 27px;
+  height: 27px;
+  flex: 0 0 27px;
+  place-items: center;
+  border-radius: 50%;
+  background: #e8e8dd;
+  color: #878872;
+}
+
+.pacing-heart svg {
+  width: 14px;
+  height: 14px;
+  stroke-width: 1.7;
+}
+
+.pacing-summary.is-guarded .pacing-heart {
+  background: #efe0d6;
+  color: #a37258;
+}
+
+.pacing-meter-copy {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 6px;
+  margin: 12px 1px 7px;
+  color: #81756d;
+  font-size: 9px;
+}
+
+.pacing-meter-copy strong {
+  color: #51443d;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.pacing-meter-copy strong span {
+  font-size: 9px;
+  font-weight: 550;
+}
+
+.pacing-meter {
+  height: 7px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #e5e4d9;
+}
+
+.pacing-meter-fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: #a6ad91;
+  transition: width 180ms ease;
+}
+
+.pacing-summary.is-guarded .pacing-meter-fill {
+  background: #bd9076;
+}
+
+.pacing-summary-note {
+  margin: 8px 1px 0;
+  color: #80756c;
+  font-size: 9px;
+  line-height: 1.45;
+}
+
+.today-feedback,
+.task-feedback,
+.symptom-feedback {
+  margin: 0 18px 12px;
+  color: #7d795f;
+  font-size: 10px;
+  line-height: 1.45;
+}
+
+.assignment-planner,
+.task-manager {
+  padding: 0 18px;
+}
+
+.assignment-planner .task-count,
+.task-manager .task-count {
+  margin-bottom: 0;
+  white-space: nowrap;
+}
+
+.assignment-buckets {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.assignment-bucket {
+  border: 1px solid #e9e2d9;
+  border-radius: 16px;
+  padding: 11px 11px 3px;
+  background: #fffefa;
+}
+
+.assignment-bucket.bucket-if-energy {
+  border-color: #e4e8dc;
+  background: #f6f7f2;
+}
+
+.assignment-bucket.bucket-leave-alone {
+  border-color: #e6e6de;
+  background: #f4f4ee;
+}
+
+.bucket-heading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 8px;
+}
+
+.bucket-icon {
+  display: grid;
+  width: 26px;
+  height: 26px;
+  flex: 0 0 26px;
+  place-items: center;
+  border-radius: 9px;
+  background: #f2e8dd;
+  color: #a7694d;
+}
+
+.bucket-if-energy .bucket-icon,
+.bucket-leave-alone .bucket-icon {
+  background: #e8eadf;
+  color: #75806b;
+}
+
+.bucket-icon svg {
+  width: 14px;
+  height: 14px;
+  stroke-width: 1.8;
+}
+
+.bucket-heading > div {
+  min-width: 0;
+  flex: 1;
+}
+
+.bucket-heading h3 {
+  margin: 0;
+  color: #51433b;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.bucket-heading p {
+  margin: 2px 0 0;
+  color: #8b7e73;
+  font-size: 8px;
+  line-height: 1.4;
+}
+
+.bucket-count {
+  display: grid;
+  min-width: 21px;
+  height: 21px;
+  place-items: center;
+  border-radius: 50%;
+  background: #f1ece5;
+  color: #776a60;
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.assignment-list,
+.checklist-list,
+.symptom-log-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.assignment-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  border-top: 1px solid #eee8df;
+  padding: 9px 1px;
+}
+
+.assignment-check,
+.checklist-check {
+  display: grid;
+  width: 24px;
+  height: 24px;
+  flex: 0 0 24px;
+  place-items: center;
+  margin-top: 1px;
+  border: 1px solid #d9cbbd;
+  border-radius: 50%;
+  padding: 0;
+  background: #fffdfa;
+  color: #fff;
+  cursor: pointer;
+}
+
+.assignment-check > span,
+.checklist-check > span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #e4dbd1;
+}
+
+.assignment-check[aria-pressed="true"],
+.checklist-check[aria-pressed="true"] {
+  border-color: #b86a4a;
+  background: #b86a4a;
+}
+
+.assignment-check svg,
+.checklist-check svg {
+  width: 13px;
+  height: 13px;
+  stroke-width: 2.5;
+}
+
+.assignment-copy,
+.checklist-copy {
+  min-width: 0;
+  flex: 1;
+}
+
+.assignment-name,
+.checklist-name {
+  margin: 0;
+  color: #493d36;
+  font-size: 10px;
+  font-weight: 650;
+  line-height: 1.4;
+}
+
+.assignment-meta,
+.checklist-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 3px 5px;
+  margin-top: 4px;
+  color: #897c72;
+  font-size: 8px;
+  line-height: 1.35;
+}
+
+.assignment-effort {
+  color: #97887c;
+}
+
+.assignment-effort svg,
+.checklist-meta svg {
+  width: 10px;
+  height: 10px;
+  stroke-width: 1.8;
+}
+
+.assignment-effort svg {
+  margin-right: -2px;
+}
+
+.assignment-row.is-complete .assignment-name,
+.checklist-row.is-complete .checklist-name {
+  color: #897c72;
+  text-decoration: line-through;
+  text-decoration-color: #c9b9aa;
+}
+
+.empty-bucket {
+  margin: 0;
+  border-top: 1px solid #eee8df;
+  padding: 9px 1px 10px;
+  color: #8d8279;
+  font-size: 9px;
+  line-height: 1.45;
+}
+
+.deadline-warning {
+  display: flex;
+  gap: 9px;
+  margin: 0 0 12px;
+  border: 1px solid #e7d6c9;
+  border-radius: 15px;
+  padding: 10px;
+  background: #f7eee7;
+}
+
+.deadline-icon {
+  display: grid;
+  width: 26px;
+  height: 26px;
+  flex: 0 0 26px;
+  place-items: center;
+  border-radius: 9px;
+  background: #efe1d5;
+  color: #a06f53;
+}
+
+.deadline-icon svg {
+  width: 14px;
+  height: 14px;
+}
+
+.deadline-copy {
+  min-width: 0;
+}
+
+.deadline-copy strong {
+  display: block;
+  color: #624d40;
+  font-size: 10px;
+  line-height: 1.45;
+}
+
+.deadline-copy p {
+  margin: 3px 0 5px;
+  color: #806f62;
+  font-size: 9px;
+  line-height: 1.45;
+}
+
+.extension-link {
+  display: inline-flex;
+  min-height: 27px;
+  align-items: center;
+  gap: 5px;
+  border-radius: 8px;
+  color: #92583e;
+  font-size: 9px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.extension-link svg {
+  width: 12px;
+  height: 12px;
+}
+
+.extension-link:hover {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.today-end-note {
+  margin: 15px 18px 20px;
+  color: #91857a;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 12px;
+  font-style: italic;
+  text-align: center;
+}
+
+.task-manager {
+  padding-top: 1px;
+}
+
+.add-task-button {
+  display: inline-flex;
+  min-height: 37px;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 10px;
+  border: 1px solid #d9b9a8;
+  border-radius: 11px;
+  padding: 0 11px;
+  background: #fbf0e9;
+  color: #99583e;
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.add-task-button svg {
+  width: 14px;
+  height: 14px;
+}
+
+.add-task-button:hover,
+.custom-symptom-add:hover:not(:disabled) {
+  background: #f5e4d9;
+}
+
+.task-form {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  margin: 0 0 13px;
+  border: 1px solid #e7dfd4;
+  border-radius: 16px;
+  padding: 12px;
+  background: #fffefa;
+}
+
+.form-heading h3 {
+  margin: 0;
+  color: #4b3d35;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.form-heading p {
+  margin: 3px 0 0;
+  color: #897d73;
+  font-size: 9px;
+}
+
+.pace-field {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 5px;
+  color: #65574e;
+  font-size: 9px;
+  font-weight: 650;
+}
+
+.pace-field > span em {
+  margin-left: 4px;
+  color: #978a80;
+  font-size: 8px;
+  font-style: normal;
+  font-weight: 500;
+}
+
+.pace-field input,
+.pace-field select,
+.pace-field textarea {
+  width: 100%;
+  min-width: 0;
+  min-height: 36px;
+  border: 1px solid #e3dbd1;
+  border-radius: 9px;
+  padding: 8px 9px;
+  background: #fffefa;
+  color: #453a34;
+  font: inherit;
+  font-size: 10px;
+  font-weight: 500;
+}
+
+.pace-field textarea {
+  min-height: 57px;
+  resize: vertical;
+}
+
+.pace-field input::placeholder,
+.pace-field textarea::placeholder {
+  color: #a3978c;
+}
+
+.task-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.task-form-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.task-save-button {
+  min-height: 36px;
+  border: 1px solid #a85d40;
+  border-radius: 10px;
+  padding: 0 12px;
+  background: #a85d40;
+  color: #fffaf5;
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.task-save-button:hover {
+  background: #934d34;
+}
+
+.task-cancel-button {
+  min-height: 36px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  padding: 0 10px;
+  background: transparent;
+  color: #81746a;
+  font-size: 10px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.checklist-list {
+  border-top: 1px solid #eae3d9;
+}
+
+.checklist-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  border-bottom: 1px solid #eae3d9;
+  padding: 10px 0;
+}
+
+.checklist-check {
+  width: 22px;
+  height: 22px;
+  flex-basis: 22px;
+}
+
+.checklist-name {
+  font-size: 9px;
+}
+
+.checklist-meta {
+  gap: 3px 4px;
+  font-size: 7px;
+}
+
+.effort-tag {
+  border-radius: 999px;
+  padding: 2px 5px;
+  background: #f1ede5;
+  color: #82766c;
+  font-size: 7px;
+  font-weight: 650;
+  text-transform: capitalize;
+}
+
+.effort-high {
+  background: #f4e8df;
+  color: #9d6249;
+}
+
+.effort-low {
+  background: #eaeee4;
+  color: #6e7c66;
+}
+
+.checklist-actions {
+  display: grid;
+  flex: 0 0 110px;
+  grid-template-columns: repeat(4, 26px);
+  justify-content: end;
+  gap: 2px;
+}
+
+.checklist-actions button,
+.symptom-log-row > button {
+  display: grid;
+  width: 26px;
+  height: 28px;
+  place-items: center;
+  border: 0;
+  border-radius: 6px;
+  padding: 0;
+  background: transparent;
+  color: #897c72;
+  cursor: pointer;
+}
+
+.checklist-actions button:hover,
+.symptom-log-row > button:hover {
+  background: #f0ebe4;
+  color: #6d594c;
+}
+
+.checklist-actions button svg,
+.symptom-log-row > button svg {
+  width: 12px;
+  height: 12px;
+}
+
+.checklist-actions .delete-task-action:hover {
+  background: #f5e8e0;
+  color: #a3543a;
+}
+
+.empty-checklist {
+  border: 1px dashed #dfd6cb;
+  border-radius: 13px;
+  padding: 18px 12px;
+  color: #81766d;
+  text-align: center;
+}
+
+.empty-checklist p {
+  margin: 0 0 8px;
+  font-size: 10px;
+}
+
+.empty-checklist button,
+.undo-notice button {
+  border: 0;
+  padding: 4px;
+  background: transparent;
+  color: #99583e;
+  font-size: 9px;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+
+.undo-notice {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 0 0 9px;
+  border-radius: 10px;
+  padding: 6px 9px;
+  background: #f1efe6;
+  color: #776d62;
+  font-size: 9px;
+}
+
+.local-save-note {
+  margin: 11px 0 0;
+  color: #988b80;
+  font-size: 8px;
+  line-height: 1.45;
+}
+
+.storage-warning {
+  margin: 0 15px 8px;
+  border: 1px solid #e7d6c9;
+  border-radius: 11px;
+  padding: 8px 10px;
+  background: #f7eee7;
+  color: #745e4d;
+  font-size: 9px;
+  line-height: 1.4;
+}
+
+.symptom-page {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  padding: 0 15px;
+}
+
+.symptom-entry-card,
+.weekly-pattern {
+  border: 1px solid #ebe5dc;
+  border-radius: 19px;
+  padding: 13px;
+  background: #fffefa;
+  box-shadow: 0 5px 16px rgba(69, 51, 39, 0.025);
+}
+
+.symptom-mark {
+  background: #f2e6dd;
+  color: #a36c50;
+}
+
+.symptom-fieldset {
+  min-width: 0;
+  margin: 0 0 13px;
+  border: 0;
+  padding: 0;
+}
+
+.symptom-fieldset legend {
+  margin-bottom: 7px;
+  color: #65574e;
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.symptom-fieldset legend span {
+  color: #968a80;
+  font-size: 8px;
+  font-weight: 500;
+}
+
+.symptom-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.symptom-chip {
+  min-height: 29px;
+  border: 1px solid #e6dfd5;
+  border-radius: 999px;
+  padding: 0 9px;
+  background: #faf8f4;
+  color: #766b62;
+  font-size: 9px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.symptom-chip.is-selected {
+  border-color: #d4a48e;
+  background: #fbefe8;
+  color: #93563d;
+}
+
+.severity-options {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.severity-option {
+  min-height: 34px;
+  border: 1px solid #e7dfd5;
+  border-radius: 9px;
+  background: #faf8f4;
+  color: #85796e;
+  font-size: 10px;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.severity-option.is-selected {
+  border-color: #c68b6c;
+  background: #f6e8df;
+  color: #8d5238;
+  box-shadow: inset 0 0 0 1px rgba(168, 93, 64, 0.08);
+}
+
+.note-field {
+  margin-bottom: 10px;
+}
+
+.log-symptom-button {
+  width: 100%;
+}
+
+.symptom-feedback {
+  margin: 7px 0 0;
+}
+
+.custom-symptom-details {
+  margin-top: 10px;
+  border-top: 1px solid #eee8df;
+  padding-top: 9px;
+}
+
+.custom-symptom-details summary {
+  display: inline-flex;
+  min-height: 28px;
+  align-items: center;
+  gap: 5px;
+  color: #8a6049;
+  font-size: 9px;
+  font-weight: 650;
+  cursor: pointer;
+  list-style: none;
+}
+
+.custom-symptom-details summary::-webkit-details-marker {
+  display: none;
+}
+
+.custom-symptom-details summary svg {
+  width: 12px;
+  height: 12px;
+}
+
+.custom-symptom-form {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.custom-symptom-form .pace-field {
+  flex: 1;
+}
+
+.custom-symptom-add {
+  min-height: 36px;
+  border: 1px solid #d9b9a8;
+  border-radius: 9px;
+  padding: 0 11px;
+  background: #fbf0e9;
+  color: #99583e;
+  font-size: 9px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.today-symptoms {
+  margin-top: 14px;
+  border-top: 1px solid #eee8df;
+  padding-top: 11px;
+}
+
+.today-symptoms-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.today-symptoms-heading h3 {
+  margin: 0;
+  color: #4d4038;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.today-symptoms-heading span {
+  color: #94877d;
+  font-size: 8px;
+}
+
+.symptom-log-list {
+  margin-top: 5px;
+}
+
+.symptom-log-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  border-top: 1px solid #f0ebe4;
+  padding: 8px 0;
+}
+
+.symptom-severity-dot {
+  width: 8px;
+  height: 8px;
+  flex: 0 0 8px;
+  margin-top: 4px;
+  border-radius: 50%;
+  background: #aab194;
+}
+
+.symptom-severity-dot[data-severity="4"],
+.symptom-severity-dot[data-severity="5"] {
+  background: #c17c5b;
+}
+
+.symptom-log-copy {
+  min-width: 0;
+  flex: 1;
+}
+
+.symptom-log-copy strong {
+  color: #52463e;
+  font-size: 9px;
+}
+
+.symptom-log-copy strong span {
+  margin-left: 4px;
+  color: #92857b;
+  font-size: 8px;
+  font-weight: 500;
+}
+
+.symptom-log-copy p {
+  margin: 3px 0 0;
+  color: #867a70;
+  font-size: 8px;
+  line-height: 1.45;
+}
+
+.no-symptoms {
+  margin: 8px 0 1px;
+  color: #8d8279;
+  font-size: 9px;
+}
+
+.week-mark {
+  background: #e8eadf;
+  color: #77806b;
+}
+
+.chart-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px 12px;
+  margin: 10px 0 6px;
+  color: #82766c;
+  font-size: 8px;
+}
+
+.chart-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.chart-legend i {
+  display: block;
+  width: 7px;
+  height: 7px;
+  border-radius: 3px;
+}
+
+.legend-battery {
+  background: #8e9a79;
+}
+
+.legend-symptoms {
+  background: #c27e5e;
+}
+
+.week-chart {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 3px;
+  border: 1px solid #eee8df;
+  border-radius: 13px;
+  padding: 9px 5px 8px;
+  background: #fcfaf6;
+}
+
+.week-day {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  border-radius: 8px;
+  padding: 4px 1px;
+}
+
+.week-day.is-today {
+  background: #f3eee7;
+}
+
+.week-day-label {
+  color: #82766c;
+  font-size: 8px;
+  font-weight: 650;
+}
+
+.week-day.is-today .week-day-label {
+  color: #9a563c;
+}
+
+.week-bars {
+  display: flex;
+  width: 100%;
+  height: 61px;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 3px;
+  border-bottom: 1px solid #e8e2d9;
+}
+
+.week-bar {
+  display: block;
+  width: 10px;
+  min-height: 3px;
+  border-radius: 4px 4px 2px 2px;
+}
+
+.battery-bar {
+  background: #909a7c;
+}
+
+.battery-drained {
+  background: #b8a390;
+}
+
+.battery-empty {
+  background: #e4dfd7;
+}
+
+.symptom-bar {
+  background: #e8e1d9;
+}
+
+.symptom-bar.has-symptom {
+  background: #c38364;
+}
+
+.week-energy-label {
+  color: #70665d;
+  font-size: 7px;
+  font-weight: 650;
+  text-transform: capitalize;
+}
+
+.week-symptom-label {
+  min-height: 18px;
+  color: #8b8076;
+  font-size: 7px;
+  line-height: 1.3;
+  text-align: center;
+}
+
+.pattern-note {
+  margin: 9px 0 0;
+  border-radius: 10px;
+  padding: 8px 9px;
+  background: #f1f1e8;
+  color: #69725f;
+  font-size: 9px;
+  line-height: 1.45;
+}
+
+.chart-caption {
+  margin: 8px 1px 0;
+  color: #988c82;
+  font-size: 8px;
+  line-height: 1.45;
+}
+
+.storage-warning + .app-scroll {
+  padding-top: 5px;
+}
+
+.bottom-nav .nav-item {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+@media (max-width: 360px) {
+  .checklist-actions {
+    flex-basis: 110px;
+    grid-template-columns: repeat(4, 26px);
+    gap: 2px;
+  }
+
+  .checklist-actions button {
+    width: 26px;
+  }
+
+  .week-chart {
+    gap: 1px;
+    padding-right: 3px;
+    padding-left: 3px;
+  }
+
+  .week-bar {
+    width: 8px;
+  }
+
+  .week-day-label {
+    font-size: 6.5px;
+  }
+}
