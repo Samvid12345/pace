@@ -200,9 +200,7 @@ button {
   display: inline-flex;
   height: 39px;
   align-items: center;
-  border-radius: 11px;
-  background: #fff;
-  padding: 3px 7px;
+  padding: 0;
 }
 
 .brand-logo {

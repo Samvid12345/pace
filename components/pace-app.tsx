@@ -329,7 +329,7 @@ export function PaceApp() {
 
           <header className="app-header">
             <a className="brand-lockup" href="#today" aria-label="Pace home" onClick={() => setActiveTab("today")}>
-              <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-9s6WfuaGwFsrNYk1yi8m6yP0kUv5wm.png" alt="Pace" className="brand-logo" />
+              <img src="/pace-logo.png" alt="Pace" className="brand-logo" />
             </a>
             {storageReady && data.profile.onboardingComplete && (
               <button className={`settings-open${activeTab === "settings" ? " is-active" : ""}`} type="button" aria-label={activeTab === "settings" ? "Return to today" : "Open settings"} onClick={() => setActiveTab(activeTab === "settings" ? "today" : "settings")}>
